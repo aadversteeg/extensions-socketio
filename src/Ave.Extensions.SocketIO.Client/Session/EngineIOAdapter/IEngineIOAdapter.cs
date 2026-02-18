@@ -24,4 +24,9 @@ public interface IEngineIOAdapter : IMyObservable<IMessage>
     /// Processes an incoming message and returns whether it should be swallowed.
     /// </summary>
     Task<bool> ProcessMessageAsync(IMessage message);
+
+    /// <summary>
+    /// Sets the opened message from a previous transport for upgrade scenarios.
+    /// </summary>
+    void SetOpenedMessage(OpenedMessage message);
 }

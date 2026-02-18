@@ -242,6 +242,12 @@ public abstract class SessionBase<T> : ISession where T : class, IEngineIOAdapte
     /// <inheritdoc />
     public abstract Task DisconnectAsync(CancellationToken cancellationToken);
 
+    /// <inheritdoc />
+    public void SetOpenedMessage(OpenedMessage message)
+    {
+        EngineIOAdapter.SetOpenedMessage(message);
+    }
+
     /// <summary>
     /// Handles a protocol message by routing it to text or binary handling.
     /// </summary>

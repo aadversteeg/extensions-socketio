@@ -194,6 +194,12 @@ public abstract class EngineIO3Adapter : IEngineIOAdapter, IDisposable
         _observers.Remove(observer);
     }
 
+    /// <inheritdoc />
+    public void SetOpenedMessage(OpenedMessage message)
+    {
+        OpenedMessage = message;
+    }
+
     /// <summary>
     /// Disposes resources.
     /// </summary>

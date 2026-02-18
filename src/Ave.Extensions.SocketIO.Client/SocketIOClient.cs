@@ -215,10 +215,14 @@ public class SocketIOClient : ISocketIOClient, IInternalSocketIOClient
     private async Task TryConnectAsync(ISession session, CancellationToken cancellationToken)
     {
         session.Subscribe(this);
+        // Capture the TCS before ConnectAsync, because during auto-upgrade the
+        // fire-and-forget response handler may replace _sessionCompletionSource
+        // with a new instance before this method resumes.
+        var sessionTcs = _sessionCompletionSource!;
         _logger.LogDebug("Session connecting...");
         await session.ConnectAsync(cancellationToken).ConfigureAwait(false);
         _session = session;
-        _sessionCompletionSource!.SetResult(true);
+        sessionTcs.TrySetResult(true);
         _logger.LogDebug("Session connected");
     }
 
@@ -427,10 +431,11 @@ public class SocketIOClient : ISocketIOClient, IInternalSocketIOClient
     {
         _logger.LogDebug("Transport upgrading...");
         using var timeoutCts = new CancellationTokenSource(Options.ConnectionTimeout);
-        timeoutCts.Token.Register(() => _connCompletionSource!.SetResult(new TimeoutException()));
+        timeoutCts.Token.Register(() => _connCompletionSource!.TrySetResult(new TimeoutException()));
         var cancellationToken = timeoutCts.Token;
         var session = NewSessionWithCancellationToken(cancellationToken);
         session.Options.Sid = message.Sid;
+        session.SetOpenedMessage(message);
         _sessionCompletionSource = new TaskCompletionSource<bool>();
         await TryConnectAsync(session, cancellationToken).ConfigureAwait(false);
         _logger.LogDebug("Transport upgraded");
@@ -506,7 +511,7 @@ public class SocketIOClient : ISocketIOClient, IInternalSocketIOClient
         Id = connectedMessage.Sid;
         Connected = true;
         _eventRunner.RunInBackground(OnConnected, this, EventArgs.Empty);
-        _connCompletionSource!.SetResult(null);
+        _connCompletionSource!.TrySetResult(null);
         _session!.OnDisconnected = () => InvokeOnDisconnected(DisconnectReason.TransportError);
     }
 

@@ -128,6 +128,8 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
         // Reset the ping timeout monitor
         _pingTimeoutCts?.Cancel();
 
+        await NotifyObserversAsync(new PingMessage()).ConfigureAwait(false);
+
         _stopwatch.Restart();
         await SendPongAsync().ConfigureAwait(false);
         _stopwatch.Stop();
@@ -160,6 +162,13 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
     public void Unsubscribe(IMyObserver<IMessage> observer)
     {
         _observers.Remove(observer);
+    }
+
+    /// <inheritdoc />
+    public void SetOpenedMessage(OpenedMessage message)
+    {
+        // No-op for v4: the Connected message carries its own Sid,
+        // and ping monitoring is server-initiated.
     }
 
     /// <summary>

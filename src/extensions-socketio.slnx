@@ -6,4 +6,5 @@
   <Project Path="UnitTests.Extensions.SocketIO.Client/UnitTests.Extensions.SocketIO.Client.csproj" />
   <Project Path="UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson.csproj" />
   <Project Path="UnitTests.Extensions.SocketIO/UnitTests.Extensions.SocketIO.csproj" />
+  <Project Path="IntegrationTests.Extensions.SocketIO.Client/IntegrationTests.Extensions.SocketIO.Client.csproj" />
 </Solution>

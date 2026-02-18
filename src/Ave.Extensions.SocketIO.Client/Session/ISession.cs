@@ -51,4 +51,9 @@ public interface ISession : IMyObserver<ProtocolMessage>, IMyObservable<IMessage
     /// Disconnects the session.
     /// </summary>
     Task DisconnectAsync(CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Sets the opened message from a previous transport for upgrade scenarios.
+    /// </summary>
+    void SetOpenedMessage(OpenedMessage message);
 }
