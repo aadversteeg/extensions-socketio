@@ -11,7 +11,7 @@ public enum EngineIOVersion
     V3 = 3,
 
     /// <summary>
-    /// Engine.IO protocol version 4, compatible with Socket.IO 3.x/4.x.
+    /// Engine.IO protocol version 4, compatible with Socket.IO 4.x/5.x.
     /// </summary>
     V4 = 4,
 }

@@ -22,6 +22,7 @@ public class HttpEngineIO4AdapterTests
         var mockHttpAdapter = new Mock<IHttpAdapter>();
         var mockRetryPolicy = new Mock<IRetriable>();
         var mockSerializer = new Mock<ISerializer>();
+        var mockDelay = new Mock<IDelay>();
         var mockPollingHandler = new Mock<IPollingHandler>();
 
         _sut = new HttpEngineIO4Adapter(
@@ -29,6 +30,7 @@ public class HttpEngineIO4AdapterTests
             mockHttpAdapter.Object,
             mockRetryPolicy.Object,
             mockSerializer.Object,
+            mockDelay.Object,
             mockPollingHandler.Object);
 
         _sut.Options = new EngineIOAdapterOptions

@@ -67,7 +67,7 @@ public class WebSocketSessionTests
         _mockWsAdapter.Verify(w => w.ConnectAsync(It.IsAny<Uri>(), It.IsAny<CancellationToken>()), Times.Once);
     }
 
-    [Fact(DisplayName = "WSS-002: ConnectAsync with Sid should send upgrade probe message")]
+    [Fact(DisplayName = "WSS-002: ConnectAsync with Sid should send probe then upgrade message")]
     public async Task WSS002()
     {
         _sut.Options = new SessionOptions
@@ -80,11 +80,23 @@ public class WebSocketSessionTests
 
         _mockWsAdapter.Setup(w => w.ConnectAsync(It.IsAny<Uri>(), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
-        _mockWsAdapter.Setup(w => w.SendAsync(It.IsAny<ProtocolMessage>(), It.IsAny<CancellationToken>()))
+
+        // When "2probe" is sent, simulate the server responding with "3probe"
+        _mockWsAdapter.Setup(w => w.SendAsync(It.Is<ProtocolMessage>(m => m.Text == "2probe"), It.IsAny<CancellationToken>()))
+            .Returns<ProtocolMessage, CancellationToken>(async (_, _) =>
+            {
+                await Task.Yield();
+                await _sut.OnNextAsync(new ProtocolMessage { Type = ProtocolMessageType.Text, Text = "3probe" });
+            });
+        _mockWsAdapter.Setup(w => w.SendAsync(It.Is<ProtocolMessage>(m => m.Text == "5"), It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
 
         await _sut.ConnectAsync(CancellationToken.None);
 
+        var sentMessages = new List<string>();
+        _mockWsAdapter.Verify(w => w.SendAsync(
+            It.Is<ProtocolMessage>(m => m.Text == "2probe"),
+            It.IsAny<CancellationToken>()), Times.Once);
         _mockWsAdapter.Verify(w => w.SendAsync(
             It.Is<ProtocolMessage>(m => m.Text == "5"),
             It.IsAny<CancellationToken>()), Times.Once);

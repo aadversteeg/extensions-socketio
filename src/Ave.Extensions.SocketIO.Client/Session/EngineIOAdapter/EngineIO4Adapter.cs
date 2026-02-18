@@ -17,22 +17,27 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
 {
     private readonly IStopwatch _stopwatch;
     private readonly ISerializer _serializer;
+    private readonly IDelay _delay;
     private readonly CancellationTokenSource _pingCancellationTokenSource = new CancellationTokenSource();
     private readonly List<IMyObserver<IMessage>> _observers = new List<IMyObserver<IMessage>>();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EngineIO4Adapter"/> class.
     /// </summary>
-    protected EngineIO4Adapter(IStopwatch stopwatch, ISerializer serializer)
+    protected EngineIO4Adapter(IStopwatch stopwatch, ISerializer serializer, IDelay delay)
     {
         _stopwatch = stopwatch;
         _serializer = serializer;
+        _delay = delay;
     }
 
     private OpenedMessage? OpenedMessage { get; set; }
 
     /// <inheritdoc />
     public EngineIOAdapterOptions Options { get; set; } = null!;
+
+    /// <inheritdoc />
+    public Action? OnDisconnected { get; set; }
 
     /// <summary>
     /// Sends a connect message.
@@ -58,10 +63,15 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
         {
             case MessageType.Ping:
                 await HandlePingMessageAsync().ConfigureAwait(false);
-                break;
+                return true;
             case MessageType.Opened:
                 await HandleOpenedMessageAsync(message).ConfigureAwait(false);
                 break;
+            case MessageType.Close:
+                OnDisconnected?.Invoke();
+                return true;
+            case MessageType.Noop:
+                return true;
         }
 
         return false;
@@ -71,6 +81,7 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
     {
         OpenedMessage = (OpenedMessage)message;
         OnOpenedMessageReceived(OpenedMessage);
+        _ = MonitorPingTimeoutAsync(_pingCancellationTokenSource.Token);
 
         var builder = new StringBuilder("40");
         if (!string.IsNullOrEmpty(Options.Namespace))
@@ -84,8 +95,39 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
         await SendConnectAsync(builder.ToString()).ConfigureAwait(false);
     }
 
+    private CancellationTokenSource? _pingTimeoutCts;
+
+    private async Task MonitorPingTimeoutAsync(CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            var timeoutMs = OpenedMessage!.PingInterval + OpenedMessage.PingTimeout;
+            _pingTimeoutCts?.Cancel();
+            _pingTimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            try
+            {
+                await _delay.DelayAsync(timeoutMs, _pingTimeoutCts.Token).ConfigureAwait(false);
+                // Timeout elapsed without receiving a ping — trigger disconnect
+                OnDisconnected?.Invoke();
+                break;
+            }
+            catch (TaskCanceledException)
+            {
+                // Either the overall cancellation was requested, or the ping reset the timer
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+                // Timer was reset by a ping — continue the loop
+            }
+        }
+    }
+
     private async Task HandlePingMessageAsync()
     {
+        // Reset the ping timeout monitor
+        _pingTimeoutCts?.Cancel();
+
         _stopwatch.Restart();
         await SendPongAsync().ConfigureAwait(false);
         _stopwatch.Stop();
@@ -127,5 +169,7 @@ public abstract class EngineIO4Adapter : IEngineIOAdapter, IDisposable
     {
         _pingCancellationTokenSource.Cancel();
         _pingCancellationTokenSource.Dispose();
+        _pingTimeoutCts?.Cancel();
+        _pingTimeoutCts?.Dispose();
     }
 }

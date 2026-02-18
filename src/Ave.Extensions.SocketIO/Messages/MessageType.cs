@@ -11,9 +11,14 @@ public enum MessageType
     Opened,
 
     /// <summary>
+    /// Engine.IO close message. Sent by either side to end the session.
+    /// </summary>
+    Close,
+
+    /// <summary>
     /// Ping keep-alive message.
     /// </summary>
-    Ping = 2,
+    Ping,
 
     /// <summary>
     /// Pong response message.
@@ -54,4 +59,14 @@ public enum MessageType
     /// Socket.IO binary acknowledgement message.
     /// </summary>
     BinaryAck,
+
+    /// <summary>
+    /// Engine.IO upgrade message. Sent by the client to complete a transport upgrade.
+    /// </summary>
+    Upgrade = 5,
+
+    /// <summary>
+    /// Engine.IO noop message. Used during transport upgrade to flush the buffer.
+    /// </summary>
+    Noop = 6,
 }

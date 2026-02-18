@@ -20,6 +20,7 @@ public class WebSocketSession : SessionBase<IWebSocketEngineIOAdapter>
     private readonly ISerializer _serializer;
     private readonly IWebSocketAdapter _wsAdapter;
     private readonly ILogger<WebSocketSession> _logger;
+    private TaskCompletionSource<bool>? _probeResponseTcs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WebSocketSession"/> class.
@@ -43,6 +44,13 @@ public class WebSocketSession : SessionBase<IWebSocketEngineIOAdapter>
     /// <inheritdoc />
     public override async Task OnNextAsync(ProtocolMessage message)
     {
+        // Intercept the probe response during transport upgrade
+        if (_probeResponseTcs != null && message.Type == ProtocolMessageType.Text && message.Text == "3probe")
+        {
+            _probeResponseTcs.TrySetResult(true);
+            return;
+        }
+
         if (message.Type == ProtocolMessageType.Bytes)
         {
             message.Bytes = EngineIOAdapter.ReadProtocolFrame(message.Bytes!);
@@ -95,9 +103,22 @@ public class WebSocketSession : SessionBase<IWebSocketEngineIOAdapter>
         await _wsAdapter.ConnectAsync(uri, cancellationToken).ConfigureAwait(false);
         if (!string.IsNullOrEmpty(Options.Sid))
         {
-            var message = new ProtocolMessage { Text = "5" };
-            _logger.LogDebug("[WebSocket] {message}", message.Text);
-            await _wsAdapter.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            // Transport upgrade: send probe, wait for response, then send upgrade packet
+            _probeResponseTcs = new TaskCompletionSource<bool>();
+            var probe = new ProtocolMessage { Text = "2probe" };
+            _logger.LogDebug("[WebSocket] {message}", probe.Text);
+            await _wsAdapter.SendAsync(probe, cancellationToken).ConfigureAwait(false);
+
+            // Wait for "3probe" response with timeout
+            using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+            timeoutCts.CancelAfter(Options.Timeout);
+            timeoutCts.Token.Register(() => _probeResponseTcs.TrySetCanceled());
+            await _probeResponseTcs.Task.ConfigureAwait(false);
+            _probeResponseTcs = null;
+
+            var upgrade = new ProtocolMessage { Text = "5" };
+            _logger.LogDebug("[WebSocket] {message}", upgrade.Text);
+            await _wsAdapter.SendAsync(upgrade, cancellationToken).ConfigureAwait(false);
         }
     }
 

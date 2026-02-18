@@ -38,9 +38,14 @@ public abstract class EngineIO3Adapter : IEngineIOAdapter, IDisposable
     }
 
     private OpenedMessage? OpenedMessage { get; set; }
+    private CancellationTokenSource? _pongTimeoutCts;
+    private bool _pongReceived;
 
     /// <inheritdoc />
     public EngineIOAdapterOptions Options { get; set; } = null!;
+
+    /// <inheritdoc />
+    public Action? OnDisconnected { get; set; }
 
     /// <summary>
     /// Sends a connect message.
@@ -82,6 +87,11 @@ public abstract class EngineIO3Adapter : IEngineIOAdapter, IDisposable
             case MessageType.Pong:
                 HandlePongMessage(message);
                 break;
+            case MessageType.Close:
+                OnDisconnected?.Invoke();
+                return true;
+            case MessageType.Noop:
+                return true;
         }
 
         return shouldSwallow;
@@ -120,15 +130,41 @@ public abstract class EngineIO3Adapter : IEngineIOAdapter, IDisposable
         {
             await _delay.DelayAsync(OpenedMessage!.PingInterval, token).ConfigureAwait(false);
             _logger.LogDebug("Sending Ping...");
+            _pongReceived = false;
             await SendPingAsync().ConfigureAwait(false);
             _logger.LogDebug("Sent Ping");
             _stopwatch.Restart();
             _ = NotifyObserversAsync(new PingMessage());
+
+            // Wait for pong within pingTimeout
+            _pongTimeoutCts?.Cancel();
+            _pongTimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            try
+            {
+                await _delay.DelayAsync(OpenedMessage.PingTimeout, _pongTimeoutCts.Token).ConfigureAwait(false);
+                // Timeout elapsed — check if pong was received
+                if (!_pongReceived)
+                {
+                    _logger.LogDebug("Pong timeout, disconnecting");
+                    OnDisconnected?.Invoke();
+                    break;
+                }
+            }
+            catch (TaskCanceledException)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+                // Pong was received before timeout — continue
+            }
         }
     }
 
     private void HandlePongMessage(IMessage message)
     {
+        _pongReceived = true;
+        _pongTimeoutCts?.Cancel();
         _stopwatch.Stop();
         var pongMessage = (PongMessage)message;
         pongMessage.Duration = _stopwatch.Elapsed;
@@ -165,5 +201,7 @@ public abstract class EngineIO3Adapter : IEngineIOAdapter, IDisposable
     {
         _pingCancellationTokenSource.Cancel();
         _pingCancellationTokenSource.Dispose();
+        _pongTimeoutCts?.Cancel();
+        _pongTimeoutCts?.Dispose();
     }
 }

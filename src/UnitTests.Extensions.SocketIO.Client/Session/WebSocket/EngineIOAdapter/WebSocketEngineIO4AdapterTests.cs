@@ -16,11 +16,13 @@ public class WebSocketEngineIO4AdapterTests
     {
         var mockStopwatch = new Mock<IStopwatch>();
         var mockSerializer = new Mock<ISerializer>();
+        var mockDelay = new Mock<IDelay>();
         var mockWsAdapter = new Mock<IWebSocketAdapter>();
 
         _sut = new WebSocketEngineIO4Adapter(
             mockStopwatch.Object,
             mockSerializer.Object,
+            mockDelay.Object,
             mockWsAdapter.Object);
 
         _sut.Options = new EngineIOAdapterOptions();

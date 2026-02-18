@@ -188,7 +188,7 @@ var client = new SocketIOClient(
 
 ## Supported Features
 
-- Engine.IO v3 (Socket.IO 2.x) and v4 (Socket.IO 3.x/4.x)
+- Engine.IO v3 (Socket.IO 2.x) and v4 (Socket.IO 4.x/5.x)
 - HTTP long-polling transport
 - WebSocket transport
 - Automatic transport upgrade (polling to WebSocket)

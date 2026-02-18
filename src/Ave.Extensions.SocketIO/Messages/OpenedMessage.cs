@@ -26,6 +26,11 @@ public class OpenedMessage : IMessage
     public int PingTimeout { get; set; }
 
     /// <summary>
+    /// Gets or sets the maximum payload size in bytes.
+    /// </summary>
+    public int MaxPayload { get; set; }
+
+    /// <summary>
     /// Gets or sets the list of available transport upgrades.
     /// </summary>
     public List<string> Upgrades { get; set; } = new List<string>();

@@ -129,6 +129,7 @@ public abstract class SessionBase<T> : ISession where T : class, IEngineIOAdapte
             Auth = newValue.Auth,
             AutoUpgrade = newValue.AutoUpgrade,
         };
+        EngineIOAdapter.OnDisconnected = () => _onDisconnected?.Invoke();
         EngineIOAdapter.Subscribe(this);
         var engineIOMessageAdapter = _engineIOMessageAdapterFactory.Create(newValue.EngineIO);
         _serializer.SetEngineIOMessageAdapter(engineIOMessageAdapter);

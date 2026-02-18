@@ -30,7 +30,8 @@ public class HttpEngineIO4Adapter : EngineIO4Adapter, IHttpEngineIOAdapter
         IHttpAdapter httpAdapter,
         IRetriable retryPolicy,
         ISerializer serializer,
-        IPollingHandler pollingHandler) : base(stopwatch, serializer)
+        IDelay delay,
+        IPollingHandler pollingHandler) : base(stopwatch, serializer, delay)
     {
         _httpAdapter = httpAdapter;
         _retryPolicy = retryPolicy;

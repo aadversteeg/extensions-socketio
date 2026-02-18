@@ -21,7 +21,8 @@ public class WebSocketEngineIO4Adapter : EngineIO4Adapter, IWebSocketEngineIOAda
     public WebSocketEngineIO4Adapter(
         IStopwatch stopwatch,
         ISerializer serializer,
-        IWebSocketAdapter webSocketAdapter) : base(stopwatch, serializer)
+        IDelay delay,
+        IWebSocketAdapter webSocketAdapter) : base(stopwatch, serializer, delay)
     {
         _webSocketAdapter = webSocketAdapter;
     }
