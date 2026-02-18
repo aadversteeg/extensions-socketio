@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Ave.Extensions.SocketIO.Client/Ave.Extensions.SocketIO.Client.csproj" />
+  <Project Path="Ave.Extensions.SocketIO.Serialization.NewtonsoftJson/Ave.Extensions.SocketIO.Serialization.NewtonsoftJson.csproj" />
+  <Project Path="Ave.Extensions.SocketIO.Server/Ave.Extensions.SocketIO.Server.csproj" />
+  <Project Path="Ave.Extensions.SocketIO/Ave.Extensions.SocketIO.csproj" />
+  <Project Path="UnitTests.Extensions.SocketIO.Client/UnitTests.Extensions.SocketIO.Client.csproj" />
+  <Project Path="UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson.csproj" />
+  <Project Path="UnitTests.Extensions.SocketIO/UnitTests.Extensions.SocketIO.csproj" />
+</Solution>
