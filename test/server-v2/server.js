@@ -18,6 +18,16 @@ function setupNamespace(nsp) {
       socket.emit.apply(socket, ["message-back"].concat(args));
     });
 
+    // Echo with 1 parameter
+    socket.on("1:emit", function (data) {
+      socket.emit("1:emit", data);
+    });
+
+    // Echo with 2 parameters
+    socket.on("2:emit", function (d1, d2) {
+      socket.emit("2:emit", d1, d2);
+    });
+
     // Ack: on "message-with-ack" -> call ack callback with same args
     socket.on("message-with-ack", function () {
       var args = Array.prototype.slice.call(arguments);
@@ -25,6 +35,23 @@ function setupNamespace(nsp) {
       if (typeof ack === "function") {
         ack.apply(null, args);
       }
+    });
+
+    // Ack with 1 parameter — callback with same data
+    socket.on("1:ack", function (data, cb) {
+      cb(data);
+    });
+
+    // Return header value via ack callback
+    socket.on("get_header", function (key, cb) {
+      cb(socket.handshake.headers[key]);
+    });
+
+    // Server-side ack: server emits with callback, client responds, server echoes result
+    socket.on("begin-ack-on-client", function () {
+      socket.emit("ack-on-client", function (arg1, arg2) {
+        socket.emit("end-ack-on-client", arg1, arg2);
+      });
     });
 
     // Server-initiated disconnect on request

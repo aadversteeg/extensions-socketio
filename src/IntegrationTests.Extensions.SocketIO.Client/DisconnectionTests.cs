@@ -67,4 +67,46 @@ public class DisconnectionTests : IntegrationTestBase
         var reason = await disconnectReason.Task;
         reason.Should().Be(DisconnectReason.IOServerDisconnect);
     }
+
+    [Fact(DisplayName = "IDC-004: Client disconnect — Id becomes null after disconnect")]
+    public async Task IDC004()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var disconnected = new TaskCompletionSource<bool>();
+        client.OnDisconnected += (_, _) => disconnected.TrySetResult(true);
+
+        await client.ConnectAsync();
+        client.Id.Should().NotBeNullOrEmpty();
+
+        await client.DisconnectAsync();
+
+        var completed = await Task.WhenAny(disconnected.Task, Task.Delay(5000));
+        completed.Should().Be(disconnected.Task, "OnDisconnected should have fired");
+
+        client.Id.Should().BeNull();
+        client.Connected.Should().BeFalse();
+    }
+
+    [Fact(DisplayName = "IDC-005: Server disconnect — Id becomes null after disconnect")]
+    public async Task IDC005()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var disconnected = new TaskCompletionSource<bool>();
+        client.OnDisconnected += (_, _) => disconnected.TrySetResult(true);
+
+        await client.ConnectAsync();
+        client.Id.Should().NotBeNullOrEmpty();
+
+        await client.EmitAsync("force-disconnect", Array.Empty<object>());
+
+        var completed = await Task.WhenAny(disconnected.Task, Task.Delay(5000));
+        completed.Should().Be(disconnected.Task, "OnDisconnected should have fired");
+
+        client.Id.Should().BeNull();
+        client.Connected.Should().BeFalse();
+    }
 }

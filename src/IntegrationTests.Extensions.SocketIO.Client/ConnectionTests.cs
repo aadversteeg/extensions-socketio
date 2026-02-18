@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Ave.Extensions.SocketIO;
 using Ave.Extensions.SocketIO.Client;
+using Ave.Extensions.SocketIO.Messages;
 
 namespace IntegrationTests.Extensions.SocketIO.Client;
 
@@ -127,9 +129,135 @@ public class ConnectionTests : IntegrationTestBase
         await client.DisconnectAsync();
     }
 
+    [Fact(DisplayName = "ICN-008: Connect after disconnect — OnConnected fires twice")]
+    public async Task ICN008()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var connectCount = 0;
+        client.OnConnected += (_, _) => connectCount++;
+
+        await client.ConnectAsync();
+        await client.DisconnectAsync();
+        await client.ConnectAsync();
+
+        await Task.Delay(100);
+
+        connectCount.Should().Be(2);
+
+        await client.DisconnectAsync();
+    }
+
+    [Theory(DisplayName = "ICN-009: Manual reconnect N times — events fire correct number of times")]
+    [InlineData(3)]
+    [InlineData(5)]
+    public async Task ICN009(int times)
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var connectCount = 0;
+        var disconnectCount = 0;
+        client.OnConnected += (_, _) => connectCount++;
+        client.OnDisconnected += (_, _) => disconnectCount++;
+
+        for (var i = 0; i < times; i++)
+        {
+            await client.ConnectAsync();
+            await client.DisconnectAsync();
+        }
+
+        await Task.Delay(100);
+
+        connectCount.Should().Be(times);
+        disconnectCount.Should().Be(times);
+    }
+
+    [Fact(DisplayName = "ICN-010: Auth object retrieved via ack — echoed back correctly")]
+    public async Task ICN010()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient(new SocketIOClientOptions
+        {
+            Reconnection = false,
+            AutoUpgrade = false,
+            Transport = TransportProtocol.WebSocket,
+            Auth = new { user = "testuser", password = "testpass" },
+        });
+
+        await client.ConnectAsync();
+
+        var authReceived = new TaskCompletionSource<AuthCredentials?>();
+        await client.EmitAsync("get_auth", Array.Empty<object>(), (IDataMessage msg) =>
+        {
+            var auth = msg.GetValue<AuthCredentials>(0);
+            authReceived.TrySetResult(auth);
+            return Task.CompletedTask;
+        });
+
+        var completed = await Task.WhenAny(authReceived.Task, Task.Delay(5000));
+        completed.Should().Be(authReceived.Task, "get_auth ack should have been received");
+
+        var auth = await authReceived.Task;
+        auth.Should().NotBeNull();
+        auth!.User.Should().Be("testuser");
+        auth.Password.Should().Be("testpass");
+
+        await client.DisconnectAsync();
+    }
+
+    [Theory(DisplayName = "ICN-011: ExtraHeaders passed through to server")]
+    [InlineData("x-custom-header", "CustomHeader-Value")]
+    [InlineData("user-agent", "dotnet-socketio[client]/socket")]
+    public async Task ICN011(string key, string value)
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient(new SocketIOClientOptions
+        {
+            Reconnection = false,
+            AutoUpgrade = false,
+            Transport = TransportProtocol.WebSocket,
+            ExtraHeaders = new Dictionary<string, string>
+            {
+                { key, value },
+            },
+        });
+
+        await client.ConnectAsync();
+
+        var headerReceived = new TaskCompletionSource<string?>();
+        var lowerCaseKey = key.ToLowerInvariant();
+        await client.EmitAsync("get_header", new object[] { lowerCaseKey }, (IDataMessage msg) =>
+        {
+            var headerValue = msg.GetValue<string>(0);
+            headerReceived.TrySetResult(headerValue);
+            return Task.CompletedTask;
+        });
+
+        var completed = await Task.WhenAny(headerReceived.Task, Task.Delay(5000));
+        completed.Should().Be(headerReceived.Task, "get_header ack should have been received");
+
+        var actual = await headerReceived.Task;
+        actual.Should().Be(value);
+
+        await client.DisconnectAsync();
+    }
+
     private class AuthResponse
     {
         [JsonPropertyName("token")]
         public string? Token { get; set; }
+    }
+
+    private class AuthCredentials
+    {
+        [JsonPropertyName("user")]
+        public string? User { get; set; }
+
+        [JsonPropertyName("password")]
+        public string? Password { get; set; }
     }
 }

@@ -214,6 +214,127 @@ public class EventTests : IntegrationTestBase
         await client.DisconnectAsync();
     }
 
+    [Fact(DisplayName = "IEV-008: Emit null — receive null back")]
+    public async Task IEV008()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var echoReceived = new TaskCompletionSource<IEventContext>();
+
+        client.On("1:emit", ctx =>
+        {
+            echoReceived.TrySetResult(ctx);
+            return Task.CompletedTask;
+        });
+
+        await client.ConnectAsync();
+        await client.EmitAsync("1:emit", new object[] { null! });
+
+        var completed = await Task.WhenAny(echoReceived.Task, Task.Delay(5000));
+        completed.Should().Be(echoReceived.Task, "1:emit event should have been received");
+
+        var ctx = await echoReceived.Task;
+        ctx.GetValue<object>(0).Should().BeNull();
+
+        await client.DisconnectAsync();
+    }
+
+    [Theory(DisplayName = "IEV-009: Emit single primitive parameter — echoed back correctly")]
+    [InlineData(true, "IEV-009a")]
+    [InlineData(false, "IEV-009b")]
+    [InlineData(-1234567890, "IEV-009c")]
+    [InlineData(1234567890, "IEV-009d")]
+    [InlineData("hello\n世界\n🌍🌎🌏", "IEV-009e")]
+    public async Task IEV009(object data, string _)
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var echoReceived = new TaskCompletionSource<IEventContext>();
+
+        client.On("1:emit", ctx =>
+        {
+            echoReceived.TrySetResult(ctx);
+            return Task.CompletedTask;
+        });
+
+        await client.ConnectAsync();
+        await client.EmitAsync("1:emit", new[] { data });
+
+        var completed = await Task.WhenAny(echoReceived.Task, Task.Delay(5000));
+        completed.Should().Be(echoReceived.Task, "1:emit event should have been received");
+
+        var ctx = await echoReceived.Task;
+        ctx.GetValue(data.GetType(), 0).Should().BeEquivalentTo(data);
+
+        await client.DisconnectAsync();
+    }
+
+    [Theory(DisplayName = "IEV-010: Emit 2 parameters with mixed types — both echoed back")]
+    [InlineData(true, false, "IEV-010a")]
+    [InlineData(false, 123, "IEV-010b")]
+    [InlineData(-1234567890, "test", "IEV-010c")]
+    [InlineData("hello\n世界\n🌍🌎🌏", 199, "IEV-010d")]
+    public async Task IEV010(object item0, object item1, string _)
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var echoReceived = new TaskCompletionSource<IEventContext>();
+
+        client.On("2:emit", ctx =>
+        {
+            echoReceived.TrySetResult(ctx);
+            return Task.CompletedTask;
+        });
+
+        await client.ConnectAsync();
+        await client.EmitAsync("2:emit", new[] { item0, item1 });
+
+        var completed = await Task.WhenAny(echoReceived.Task, Task.Delay(5000));
+        completed.Should().Be(echoReceived.Task, "2:emit event should have been received");
+
+        var ctx = await echoReceived.Task;
+        ctx.GetValue(item0.GetType(), 0).Should().BeEquivalentTo(item0);
+        ctx.GetValue(item1.GetType(), 1).Should().BeEquivalentTo(item1);
+
+        await client.DisconnectAsync();
+    }
+
+    [Fact(DisplayName = "IEV-011: OnAny and On handlers both fire for same event")]
+    public async Task IEV011()
+    {
+        if (ShouldSkip) return;
+
+        using var client = CreateClient();
+        var onHandlerCalled = new TaskCompletionSource<bool>();
+        var onAnyHandlerCalled = new TaskCompletionSource<bool>();
+
+        client.OnAny((_, _) =>
+        {
+            onAnyHandlerCalled.TrySetResult(true);
+            return Task.CompletedTask;
+        });
+        client.On("1:emit", _ =>
+        {
+            onHandlerCalled.TrySetResult(true);
+            return Task.CompletedTask;
+        });
+
+        await client.ConnectAsync();
+        await client.EmitAsync("1:emit", new object[] { "test" });
+
+        var bothCompleted = await Task.WhenAll(
+            Task.WhenAny(onHandlerCalled.Task, Task.Delay(5000)),
+            Task.WhenAny(onAnyHandlerCalled.Task, Task.Delay(5000)));
+
+        bothCompleted[0].Should().Be(onHandlerCalled.Task, "On handler should have been called");
+        bothCompleted[1].Should().Be(onAnyHandlerCalled.Task, "OnAny handler should have been called");
+
+        await client.DisconnectAsync();
+    }
+
     private class TestPayload
     {
         public string? Name { get; set; }
