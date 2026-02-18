@@ -36,9 +36,9 @@ public class DecapsulatorTests
     }
 
     [Theory(DisplayName = "DEC-002: DecapsulateEventMessage should parse namespace, id and data")]
-    [InlineData("[\"hello\"]", 0, null, "[\"hello\"]")]
+    [InlineData("[\"hello\"]", -1, null, "[\"hello\"]")]
     [InlineData("1[\"hello\"]", 1, null, "[\"hello\"]")]
-    [InlineData("/test,[\"hello\"]", 0, "/test", "[\"hello\"]")]
+    [InlineData("/test,[\"hello\"]", -1, "/test", "[\"hello\"]")]
     [InlineData("/test,1[\"hello\"]", 1, "/test", "[\"hello\"]")]
     public void DEC002(string text, int id, string? ns, string data)
     {
@@ -55,7 +55,7 @@ public class DecapsulatorTests
     }
 
     [Theory(DisplayName = "DEC-003: DecapsulateBinaryEventMessage should parse bytes count, namespace, id and data")]
-    [InlineData("1-[\"event\",{\"_placeholder\":true,\"num\":0}]", 0, null, "[\"event\",{\"_placeholder\":true,\"num\":0}]", 1)]
+    [InlineData("1-[\"event\",{\"_placeholder\":true,\"num\":0}]", -1, null, "[\"event\",{\"_placeholder\":true,\"num\":0}]", 1)]
     [InlineData("1-2[\"event\",{\"_placeholder\":true,\"num\":0}]", 2, null, "[\"event\",{\"_placeholder\":true,\"num\":0}]", 1)]
     [InlineData("1-8[\"event\"]", 8, null, "[\"event\"]", 1)]
     [InlineData("1-/test,8[\"event\"]", 8, "/test", "[\"event\"]", 1)]

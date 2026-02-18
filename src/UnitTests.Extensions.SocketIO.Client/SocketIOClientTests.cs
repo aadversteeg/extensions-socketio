@@ -33,9 +33,14 @@ public class SocketIOClientTests
         var mockSession = new Mock<ISession>();
         mockSession.SetupAllProperties();
         IMyObserver<IMessage>? observer = null;
+        var observerReady = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         mockSession.Setup(s => s.Subscribe(It.IsAny<IMyObserver<IMessage>>()))
-            .Callback<IMyObserver<IMessage>>(o => observer = o);
+            .Callback<IMyObserver<IMessage>>(o =>
+            {
+                observer = o;
+                observerReady.TrySetResult(true);
+            });
 
         mockSession.Setup(s => s.ConnectAsync(It.IsAny<CancellationToken>()))
             .Returns(Task.CompletedTask);
@@ -50,12 +55,9 @@ public class SocketIOClientTests
 
         Func<Task> deliverConnected = async () =>
         {
-            // Wait for ConnectAsync to start and subscribe the observer
-            await Task.Delay(200);
-            if (observer != null)
-            {
-                await observer.OnNextAsync(new ConnectedMessage { Sid = "test-sid" });
-            }
+            // Wait for ConnectAsync to subscribe the observer
+            await observerReady.Task;
+            await observer!.OnNextAsync(new ConnectedMessage { Sid = "test-sid" });
         };
 
         return (mockSession, deliverConnected);
