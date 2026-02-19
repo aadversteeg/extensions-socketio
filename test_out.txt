@@ -1,0 +1,616 @@
+Build started 18/02/2026 19:45:39.
+Test run for D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\bin\Debug\net10.0\IntegrationTests.Extensions.SocketIO.Server.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.1 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.3.1+6b60a9e56a (64-bit .NET 10.0.3)
+[xUnit.net 00:00:00.09]   Discovering: IntegrationTests.Extensions.SocketIO.Server
+[xUnit.net 00:00:00.13]   Discovered:  IntegrationTests.Extensions.SocketIO.Server
+[xUnit.net 00:00:00.14]   Starting:    IntegrationTests.Extensions.SocketIO.Server
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IHS", Request id "0HNJF3NL84IHS:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 47
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IHU", Request id "0HNJF3NL84IHU:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 47
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IHV", Request id "0HNJF3NL84IHV:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 47
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IHT", Request id "0HNJF3NL84IHT:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84II8", Request id "0HNJF3NL84II8:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.GetReadAsyncResult()
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+  Passed SDC-001: Client disconnects — server OnDisconnect fires [992 ms]
+  Passed SEV-001: Client emits event, server receives it [1 s]
+  Passed SCN-004: Server OnConnection callback fires with valid socket [1 s]
+  Passed SCN-001: Client connects via WebSocket to default namespace [336 ms]
+  Passed SDC-003: After disconnect, socket.Connected is false [841 ms]
+  Passed SEV-002: Client emits event with data, server gets correct data [697 ms]
+  Passed SCN-002: Client connects via polling to default namespace [326 ms]
+[xUnit.net 00:00:02.86]     SDC-002: Server-initiated disconnect — client receives disconnect [FAIL]
+[xUnit.net 00:00:02.86]       Expected disconnected not to be <null>.
+[xUnit.net 00:00:02.86]       Stack Trace:
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+[xUnit.net 00:00:02.86]            at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+[xUnit.net 00:00:02.86]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\DisconnectionTests.cs(54,0): at IntegrationTests.Extensions.SocketIO.Server.DisconnectionTests.SDC002()
+[xUnit.net 00:00:02.86]         --- End of stack trace from previous location ---
+  Failed SDC-002: Server-initiated disconnect — client receives disconnect [409 ms]
+  Error Message:
+   Expected disconnected not to be <null>.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+   at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.DisconnectionTests.SDC002() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\DisconnectionTests.cs:line 54
+--- End of stack trace from previous location ---
+  Passed SCN-003: Client connects to custom namespace [346 ms]
+  Passed SCN-005: Server socket has valid handshake data [827 ms]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84II3", Request id "0HNJF3NL84II3:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (109): The remote party closed the WebSocket connection without completing the close handshake. ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84II1", Request id "0HNJF3NL84II1:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84II4", Request id "0HNJF3NL84II4:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.GetReadResult(ReadResult& result)
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+[xUnit.net 00:00:04.87]     SBC-003: socket.To(room).EmitAsync targets specific room only [FAIL]
+[xUnit.net 00:00:04.87]       Expected client1Events not to be empty because client1 is in vip-room.
+[xUnit.net 00:00:04.87]       Stack Trace:
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+[xUnit.net 00:00:04.87]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs(126,0): at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC003()
+[xUnit.net 00:00:04.87]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:04.87]     SRM-004: Emit to room reaches only room members [FAIL]
+[xUnit.net 00:00:04.87]       Expected client0Events not to be empty because client0 is in room-a.
+[xUnit.net 00:00:04.87]       Stack Trace:
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+[xUnit.net 00:00:04.87]            at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+[xUnit.net 00:00:04.87]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\RoomTests.cs(113,0): at IntegrationTests.Extensions.SocketIO.Server.RoomTests.SRM004()
+[xUnit.net 00:00:04.87]         --- End of stack trace from previous location ---
+  Passed SMW-001: Middleware calls next — connection succeeds [3 s]
+  Passed SEV-006: Server OnAny catches all client events [1 s]
+  Passed SMW-002: Middleware does not call next — connection rejected [3 s]
+  Passed SEV-005: Server emits event with data, client receives correct data [313 ms]
+  Failed SBC-003: socket.To(room).EmitAsync targets specific room only [4 s]
+  Error Message:
+   Expected client1Events not to be empty because client1 is in vip-room.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC003() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs:line 126
+--- End of stack trace from previous location ---
+  Failed SRM-004: Emit to room reaches only room members [4 s]
+  Error Message:
+   Expected client0Events not to be empty because client0 is in room-a.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.RoomTests.SRM004() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\RoomTests.cs:line 113
+--- End of stack trace from previous location ---
+  Passed SEV-004: Server emits event on connect, client receives it [317 ms]
+  Passed SEV-003: Client emits with multiple parameters [638 ms]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IJE", Request id "0HNJF3NL84IJE:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+  Passed SEV-007: Client once handler fires only once when server sends twice [1 s]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IJ6", Request id "0HNJF3NL84IJ6:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+[xUnit.net 00:00:08.74]     SRM-005: Emit with Except excludes correct clients [FAIL]
+[xUnit.net 00:00:08.74]       Expected client1Events not to be empty because client1 is in room-b and not excluded.
+[xUnit.net 00:00:08.74]       Stack Trace:
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+[xUnit.net 00:00:08.74]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\RoomTests.cs(150,0): at IntegrationTests.Extensions.SocketIO.Server.RoomTests.SRM005()
+[xUnit.net 00:00:08.74]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:08.74]     SBC-002: socket.Broadcast.EmitAsync reaches all except sender [FAIL]
+[xUnit.net 00:00:08.74]       Expected client1Events not to be empty because other client should receive broadcast.
+[xUnit.net 00:00:08.74]       Stack Trace:
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+[xUnit.net 00:00:08.74]            at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+[xUnit.net 00:00:08.74]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs(91,0): at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC002()
+[xUnit.net 00:00:08.74]         --- End of stack trace from previous location ---
+  Failed SRM-005: Emit with Except excludes correct clients [3 s]
+  Error Message:
+   Expected client1Events not to be empty because client1 is in room-b and not excluded.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.RoomTests.SRM005() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\RoomTests.cs:line 150
+--- End of stack trace from previous location ---
+  Failed SBC-002: socket.Broadcast.EmitAsync reaches all except sender [3 s]
+  Error Message:
+   Expected client1Events not to be empty because other client should receive broadcast.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC002() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs:line 91
+--- End of stack trace from previous location ---
+  Passed SRM-002: JoinAsync adds room to socket.Rooms [2 s]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IJL", Request id "0HNJF3NL84IJL:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+[xUnit.net 00:00:12.61]     SBC-001: Server EmitAsync reaches all connected clients [FAIL]
+[xUnit.net 00:00:12.61]       Expected client0Events not to be empty because client0 should receive broadcast.
+[xUnit.net 00:00:12.61]       Stack Trace:
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+[xUnit.net 00:00:12.61]            at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+[xUnit.net 00:00:12.61]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs(61,0): at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC001()
+[xUnit.net 00:00:12.61]         --- End of stack trace from previous location ---
+  Failed SBC-001: Server EmitAsync reaches all connected clients [3 s]
+  Error Message:
+   Expected client0Events not to be empty because client0 should receive broadcast.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message, Object[] args)
+   at FluentAssertions.Execution.GivenSelector`1.FailWith(String message)
+   at FluentAssertions.Collections.GenericCollectionAssertions`3.NotBeEmpty(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.BroadcastTests.SBC001() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\BroadcastTests.cs:line 61
+--- End of stack trace from previous location ---
+  Passed SRM-001: Socket auto-joins room with its own ID [3 s]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IHR", Request id "0HNJF3NL84IHR:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+[xUnit.net 00:00:15.73]     SAK-001: Client emits with ack, server responds via SendAckDataAsync [FAIL]
+[xUnit.net 00:00:15.73]       Expected ack not to be <null>.
+[xUnit.net 00:00:15.73]       Stack Trace:
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+[xUnit.net 00:00:15.73]            at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+[xUnit.net 00:00:15.73]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\AcknowledgementTests.cs(58,0): at IntegrationTests.Extensions.SocketIO.Server.AcknowledgementTests.SAK001()
+[xUnit.net 00:00:15.73]         --- End of stack trace from previous location ---
+  Failed SAK-001: Client emits with ack, server responds via SendAckDataAsync [15 s]
+  Error Message:
+   Expected ack not to be <null>.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+   at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.AcknowledgementTests.SAK001() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\AcknowledgementTests.cs:line 58
+--- End of stack trace from previous location ---
+  Passed SRM-003: LeaveAsync removes room from socket.Rooms [2 s]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IJS", Request id "0HNJF3NL84IJS:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+  Passed SAK-002: Server emits with ack, client responds [2 s]
+fail: Microsoft.AspNetCore.Server.Kestrel[13]
+      Connection id "0HNJF3NL84IJV", Request id "0HNJF3NL84IJV:00000001": An unhandled exception was thrown by the application.
+      System.Net.WebSockets.WebSocketException (0x80004005): The remote party closed the WebSocket connection without completing the close handshake.
+       ---> Microsoft.AspNetCore.Connections.ConnectionResetException: An existing connection was forcibly closed by the remote host.
+       ---> System.Net.Sockets.SocketException (10054): An existing connection was forcibly closed by the remote host.
+         --- End of inner exception stack trace ---
+         at System.IO.Pipelines.Pipe.DefaultPipeReader.GetResult(Int16 token)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1UpgradeMessageBody.ReadAsyncInternalAwaited(ValueTask`1 readTask, CancellationToken cancellationToken)
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.IO.Stream.ReadAtLeastAsyncCore(Memory`1 buffer, Int32 minimumBytes, Boolean throwOnEndOfStream, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.EnsureBufferContainsAsync(Int32 minimumRequiredBytes, CancellationToken cancellationToken)
+         at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Net.WebSockets.ManagedWebSocket.ReceiveAsyncPrivate[TResult](Memory`1 payloadBuffer, CancellationToken cancellationToken)
+         at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.<>c.<.cctor>b__4_0(Object state)
+      --- End of stack trace from previous location ---
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.ReceiveTextAsync(WebSocket webSocket, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 165
+         at Ave.Extensions.SocketIO.Server.EngineIO.Transport.WebSocketTransportHandler.HandleUpgradeAsync(WebSocket webSocket, IEngineIOSession session, CancellationToken cancellationToken) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\EngineIO\Transport\WebSocketTransportHandler.cs:line 58
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.HandleExistingSession(HttpContext context, String sid, String transport) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 189
+         at Ave.Extensions.SocketIO.Server.Middleware.SocketIOMiddleware.InvokeAsync(HttpContext context) in D:\dev\ave\extensions-socketio\src\Ave.Extensions.SocketIO.Server\Middleware\SocketIOMiddleware.cs:line 104
+         at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+[xUnit.net 00:00:33.19]     SAK-003: Complex object round-trip via ack [FAIL]
+[xUnit.net 00:00:33.19]       Expected ack not to be <null>.
+[xUnit.net 00:00:33.19]       Stack Trace:
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+[xUnit.net 00:00:33.19]            at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+[xUnit.net 00:00:33.19]         D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\AcknowledgementTests.cs(91,0): at IntegrationTests.Extensions.SocketIO.Server.AcknowledgementTests.SAK003()
+[xUnit.net 00:00:33.19]         --- End of stack trace from previous location ---
+[xUnit.net 00:00:33.20]   Finished:    IntegrationTests.Extensions.SocketIO.Server
+  Failed SAK-003: Complex object round-trip via ack [15 s]
+  Error Message:
+   Expected ack not to be <null>.
+  Stack Trace:
+     at FluentAssertions.Execution.LateBoundTestFramework.Throw(String message)
+   at FluentAssertions.Execution.TestFrameworkProvider.Throw(String message)
+   at FluentAssertions.Execution.DefaultAssertionStrategy.HandleFailure(String message)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(Func`1 failReasonFunc)
+   at FluentAssertions.Execution.AssertionScope.FailWith(String message)
+   at FluentAssertions.Primitives.ReferenceTypeAssertions`2.NotBeNull(String because, Object[] becauseArgs)
+   at IntegrationTests.Extensions.SocketIO.Server.AcknowledgementTests.SAK003() in D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\AcknowledgementTests.cs:line 91
+--- End of stack trace from previous location ---
+
+Test Run Failed.
+Total tests: 28
+     Passed: 20
+     Failed: 8
+ Total time: 33,7406 Seconds
+     1>Project "D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\IntegrationTests.Extensions.SocketIO.Server.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "D:\dev\ave\extensions-socketio\src\IntegrationTests.Extensions.SocketIO.Server\IntegrationTests.Extensions.SocketIO.Server.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:34.49

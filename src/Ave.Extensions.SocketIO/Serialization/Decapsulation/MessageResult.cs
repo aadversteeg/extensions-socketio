@@ -13,7 +13,7 @@ public class MessageResult
     /// <summary>
     /// Gets or sets the packet identifier.
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; set; } = -1;
 
     /// <summary>
     /// Gets or sets the JSON data payload.

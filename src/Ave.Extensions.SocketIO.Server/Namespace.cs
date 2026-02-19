@@ -131,9 +131,13 @@ public class Namespace : INamespace
         var accepted = await RunMiddlewareAsync(socket).ConfigureAwait(false);
         if (!accepted)
         {
+            var errorMessage = socket.Data.TryGetValue("error", out var errObj) && errObj is string errStr
+                ? errStr
+                : "middleware rejected";
+            var escapedMessage = JsonSerializer.Serialize(new { message = errorMessage });
             var errorText = Name == "/"
-                ? "44{\"message\":\"middleware rejected\"}"
-                : $"44{Name},{{\"message\":\"middleware rejected\"}}";
+                ? $"44{escapedMessage}"
+                : $"44{Name},{escapedMessage}";
             await engineSession.SendAsync(errorText, CancellationToken.None).ConfigureAwait(false);
             return null;
         }

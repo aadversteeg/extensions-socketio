@@ -10,6 +10,9 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.5" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+    <!-- ASP.NET Core (for Server project, netstandard2.1 target) -->
+    <PackageVersion Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.WebSockets" Version="2.3.9" />
     <!-- Optional serializer -->
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <!-- Test dependencies -->
