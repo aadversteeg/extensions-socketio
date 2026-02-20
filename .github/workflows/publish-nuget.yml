@@ -1,0 +1,68 @@
+name: Publish to NuGet
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_id:
+        description: 'GitHub Release ID (leave empty for latest release)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get latest release ID
+        id: latest_release
+        if: ${{ github.event.inputs.release_id == '' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const releases = await github.rest.repos.listReleases({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            if (releases.data.length === 0) {
+              core.setFailed('No releases found in this repository');
+              return;
+            }
+            const latestRelease = releases.data[0];
+            console.log(`Latest release: ${latestRelease.name} (ID: ${latestRelease.id})`);
+            core.setOutput('id', latestRelease.id);
+            core.setOutput('tag', latestRelease.tag_name);
+            core.setOutput('name', latestRelease.name);
+
+      - name: Set release ID
+        id: release
+        run: |
+          if [ -n "${{ github.event.inputs.release_id }}" ]; then
+            echo "RELEASE_ID=${{ github.event.inputs.release_id }}" >> $GITHUB_ENV
+            echo "Using specified release ID: ${{ github.event.inputs.release_id }}"
+          else
+            echo "RELEASE_ID=${{ steps.latest_release.outputs.id }}" >> $GITHUB_ENV
+            echo "Using latest release: ${{ steps.latest_release.outputs.name }} (ID: ${{ steps.latest_release.outputs.id }})"
+          fi
+
+      - name: Download release assets
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: ${{ github.repository }}
+          releaseId: ${{ env.RELEASE_ID }}
+          fileName: "*.nupkg"
+          out-file-path: "./packages"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Push to NuGet
+        run: |
+          echo "Publishing packages from release ID: ${{ env.RELEASE_ID }}"
+          dotnet nuget push "./packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

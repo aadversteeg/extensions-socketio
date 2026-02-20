@@ -1,0 +1,31 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore src/extensions-socketio.slnx
+
+    - name: Build
+      run: dotnet build src/extensions-socketio.slnx --configuration Release --no-restore
+
+    - name: Test
+      run: |
+        dotnet test src/UnitTests.Extensions.SocketIO/UnitTests.Extensions.SocketIO.csproj --no-build --configuration Release --verbosity normal
+        dotnet test src/UnitTests.Extensions.SocketIO.Client/UnitTests.Extensions.SocketIO.Client.csproj --no-build --configuration Release --verbosity normal
+        dotnet test src/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson.csproj --no-build --configuration Release --verbosity normal

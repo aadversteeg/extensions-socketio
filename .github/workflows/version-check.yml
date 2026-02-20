@@ -1,0 +1,59 @@
+name: Version Check
+
+on:
+  pull_request:
+    types: [labeled]
+
+jobs:
+  version-check:
+    if: startsWith(github.event.label.name, 'version/')
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Extract version from label
+      id: extract_version
+      run: echo "VERSION=${GITHUB_EVENT_LABEL_NAME#version/}" >> $GITHUB_OUTPUT
+      env:
+        GITHUB_EVENT_LABEL_NAME: ${{ github.event.label.name }}
+
+    - name: Restore dependencies
+      run: dotnet restore src/extensions-socketio.slnx
+
+    - name: Build
+      run: dotnet build src/extensions-socketio.slnx --configuration Release --no-restore
+
+    - name: Test
+      run: |
+        dotnet test src/UnitTests.Extensions.SocketIO/UnitTests.Extensions.SocketIO.csproj --no-build --configuration Release --verbosity normal
+        dotnet test src/UnitTests.Extensions.SocketIO.Client/UnitTests.Extensions.SocketIO.Client.csproj --no-build --configuration Release --verbosity normal
+        dotnet test src/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson/UnitTests.Extensions.SocketIO.Serialization.NewtonsoftJson.csproj --no-build --configuration Release --verbosity normal
+
+    - name: Pack
+      run: dotnet pack src/extensions-socketio.slnx --no-build --configuration Release /p:Version=${{ steps.extract_version.outputs.VERSION }} --output ./packages
+
+    - name: Upload packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: packages-${{ steps.extract_version.outputs.VERSION }}
+        path: ./packages/*.nupkg
+
+    - name: Comment on PR
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const version = '${{ steps.extract_version.outputs.VERSION }}';
+          const comment = `NuGet packages for version ${version} have been built and uploaded as artifacts.\n\nYou can download them from the "Summary" page of this workflow run.`;
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
