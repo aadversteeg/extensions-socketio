@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -29,6 +30,8 @@ public class SocketIOMiddleware
     private readonly MessageRouter _messageRouterImpl;
     private readonly SocketIOServer _server;
     private readonly ILogger<SocketIOMiddleware> _logger;
+    private readonly ILoggerFactory _loggerFactory;
+    private readonly ConcurrentDictionary<string, IHeartbeatManager> _heartbeats = new();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SocketIOMiddleware"/> class.
@@ -42,6 +45,7 @@ public class SocketIOMiddleware
         ISerializer serializer,
         IMessageRouter messageRouter,
         ISocketIOServer server,
+        ILoggerFactory loggerFactory,
         ILogger<SocketIOMiddleware> logger)
     {
         _next = next;
@@ -53,6 +57,7 @@ public class SocketIOMiddleware
         _messageRouter = messageRouter;
         _messageRouterImpl = (MessageRouter)messageRouter;
         _server = (SocketIOServer)server;
+        _loggerFactory = loggerFactory;
         _logger = logger;
     }
 
@@ -192,6 +197,13 @@ public class SocketIOMiddleware
 
     private void SetupSession(IEngineIOSession session, Handshake handshake, EngineIOVersion eioVersion)
     {
+        // Start heartbeat manager for this session
+        IHeartbeatManager heartbeat = eioVersion == EngineIOVersion.V4
+            ? new HeartbeatV4Manager(_options, _loggerFactory.CreateLogger<HeartbeatV4Manager>())
+            : new HeartbeatV3Manager(_options, _loggerFactory.CreateLogger<HeartbeatV3Manager>());
+        _heartbeats.TryAdd(session.Sid, heartbeat);
+        heartbeat.Start(session);
+
         // Set up message routing: when Engine.IO receives a Socket.IO message, route it
         session.OnMessage = async msg =>
         {
@@ -204,6 +216,10 @@ public class SocketIOMiddleware
         session.OnClose = () =>
         {
             _logger.LogDebug("Session {Sid} closed", session.Sid);
+            if (_heartbeats.TryRemove(session.Sid, out var hb))
+            {
+                hb.Dispose();
+            }
             _messageRouterImpl.HandleSessionCloseAsync(session.Sid).ConfigureAwait(false);
             _sessionStore.Remove(session.Sid);
         };
@@ -214,16 +230,18 @@ public class SocketIOMiddleware
         // Engine.IO level messages
         if (text == "2") // Ping
         {
-            if (eioVersion == EngineIOVersion.V3)
+            if (_heartbeats.TryGetValue(session.Sid, out var hbPing))
             {
-                // V3: client sends ping, server responds pong
-                await session.SendAsync("3", CancellationToken.None).ConfigureAwait(false);
+                hbPing.HandlePing();
             }
             return;
         }
         if (text == "3") // Pong
         {
-            // V4: server sent ping, client responds pong — heartbeat is alive
+            if (_heartbeats.TryGetValue(session.Sid, out var hbPong))
+            {
+                hbPong.HandlePong();
+            }
             return;
         }
         if (text == "1") // Close
