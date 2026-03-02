@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -101,17 +102,53 @@ public class WebSocketTransportHandler : IWebSocketTransportHandler
 
                 if (result.MessageType == WebSocketMessageType.Text)
                 {
-                    var text = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    await session.ReceiveAsync(new ProtocolMessage
+                    if (result.EndOfMessage)
                     {
-                        Type = ProtocolMessageType.Text,
-                        Text = text,
-                    }).ConfigureAwait(false);
+                        var text = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                        await session.ReceiveAsync(new ProtocolMessage
+                        {
+                            Type = ProtocolMessageType.Text,
+                            Text = text,
+                        }).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        using var ms = new MemoryStream();
+                        ms.Write(buffer, 0, result.Count);
+                        while (!result.EndOfMessage)
+                        {
+                            result = await webSocket.ReceiveAsync(
+                                new ArraySegment<byte>(buffer), cancellationToken).ConfigureAwait(false);
+                            ms.Write(buffer, 0, result.Count);
+                        }
+                        var text = Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length);
+                        await session.ReceiveAsync(new ProtocolMessage
+                        {
+                            Type = ProtocolMessageType.Text,
+                            Text = text,
+                        }).ConfigureAwait(false);
+                    }
                 }
                 else if (result.MessageType == WebSocketMessageType.Binary)
                 {
-                    var raw = new byte[result.Count];
-                    Buffer.BlockCopy(buffer, 0, raw, 0, result.Count);
+                    byte[] raw;
+                    if (result.EndOfMessage)
+                    {
+                        raw = new byte[result.Count];
+                        Buffer.BlockCopy(buffer, 0, raw, 0, result.Count);
+                    }
+                    else
+                    {
+                        using var ms = new MemoryStream();
+                        ms.Write(buffer, 0, result.Count);
+                        while (!result.EndOfMessage)
+                        {
+                            result = await webSocket.ReceiveAsync(
+                                new ArraySegment<byte>(buffer), cancellationToken).ConfigureAwait(false);
+                            ms.Write(buffer, 0, result.Count);
+                        }
+                        raw = ms.ToArray();
+                    }
                     var data = frameCodec.ReadFrame(raw);
                     await session.ReceiveAsync(new ProtocolMessage
                     {
